@@ -8,6 +8,198 @@
   },
   "instructions": [
     {
+      "name": "create_campaign",
+      "discriminator": [
+        111,
+        131,
+        187,
+        98,
+        160,
+        193,
+        114,
+        244
+      ],
+      "accounts": [
+        {
+          "name": "campaign_owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "campaign",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  109,
+                  112,
+                  97,
+                  105,
+                  103,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "program_state.campaign_count",
+                "account": "ProgramState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "program_state"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "campaign_title",
+          "type": "string"
+        },
+        {
+          "name": "campaign_description",
+          "type": "string"
+        },
+        {
+          "name": "campaign_image_url",
+          "type": "string"
+        },
+        {
+          "name": "campaign_goal_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "delete_campaign",
+      "discriminator": [
+        223,
+        105,
+        48,
+        131,
+        88,
+        27,
+        249,
+        227
+      ],
+      "accounts": [
+        {
+          "name": "campaign_ower",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "campaign"
+          ]
+        },
+        {
+          "name": "campaign",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  109,
+                  112,
+                  97,
+                  105,
+                  103,
+                  110
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "campaign_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "campaign_id",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "donate",
+      "discriminator": [
+        121,
+        186,
+        218,
+        211,
+        73,
+        70,
+        196,
+        180
+      ],
+      "accounts": [
+        {
+          "name": "transaction_owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "transaction",
+          "writable": true
+        },
+        {
+          "name": "campaign",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  109,
+                  112,
+                  97,
+                  105,
+                  103,
+                  110
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "campaign_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "campaign_id",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "initialize",
       "discriminator": [
         175,
@@ -57,9 +249,223 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "update_campaign",
+      "discriminator": [
+        235,
+        31,
+        39,
+        49,
+        121,
+        173,
+        19,
+        92
+      ],
+      "accounts": [
+        {
+          "name": "campaign_ower",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "campaign"
+          ]
+        },
+        {
+          "name": "campaign",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  109,
+                  112,
+                  97,
+                  105,
+                  103,
+                  110
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "campaign_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "campaign_id",
+          "type": "u64"
+        },
+        {
+          "name": "campaign_title",
+          "type": "string"
+        },
+        {
+          "name": "campaign_description",
+          "type": "string"
+        },
+        {
+          "name": "campaign_image_url",
+          "type": "string"
+        },
+        {
+          "name": "campaign_goal_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "update_platform_state",
+      "discriminator": [
+        7,
+        86,
+        44,
+        96,
+        166,
+        217,
+        31,
+        7
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "program_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  103,
+                  114,
+                  97,
+                  109,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "platform_fee",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "withrawer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "campaign",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  97,
+                  109,
+                  112,
+                  97,
+                  105,
+                  103,
+                  110
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "campaign_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "transaction",
+          "writable": true
+        },
+        {
+          "name": "program_state",
+          "writable": true
+        },
+        {
+          "name": "platform_address",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "campaign_id",
+          "type": "u64"
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
     }
   ],
   "accounts": [
+    {
+      "name": "Campaign",
+      "discriminator": [
+        50,
+        40,
+        49,
+        11,
+        157,
+        220,
+        229,
+        192
+      ]
+    },
     {
       "name": "ProgramState",
       "discriminator": [
@@ -72,9 +478,155 @@
         167,
         230
       ]
+    },
+    {
+      "name": "Transaction",
+      "discriminator": [
+        11,
+        24,
+        174,
+        129,
+        203,
+        117,
+        242,
+        23
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ProgramAlreadyInitialized",
+      "msg": "Program Already Initialized"
+    },
+    {
+      "code": 6001,
+      "name": "TitleTooLongOrTooShort",
+      "msg": "Campaign Title either too long or too short"
+    },
+    {
+      "code": 6002,
+      "name": "DescriptionTooLongOrTooShort",
+      "msg": "Campaign Description either too long or too short"
+    },
+    {
+      "code": 6003,
+      "name": "ImageUrlTooLongOrTooShort",
+      "msg": "Campaign Image URL either too long or too short"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidGoalAmount",
+      "msg": "Invalid Goal Amount"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidCampaignId",
+      "msg": "Invalid Campaign Id"
+    },
+    {
+      "code": 6006,
+      "name": "CampaignAlreadyDeleted",
+      "msg": "Campaign Already Deleted"
+    },
+    {
+      "code": 6007,
+      "name": "CampaignNotActive",
+      "msg": "Campaign Not Active"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidAmount",
+      "msg": "Invalid Amount"
+    },
+    {
+      "code": 6009,
+      "name": "GoalAmountReached",
+      "msg": "Goal Amount Reached"
+    },
+    {
+      "code": 6010,
+      "name": "UnAuthorizedWithdrawer",
+      "msg": "UnAuthorized Withdrawer"
+    },
+    {
+      "code": 6011,
+      "name": "InsufficientBalance",
+      "msg": "Insufficient Balance"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidPlatformAddress",
+      "msg": "Invalid Platform Address"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidPlatformFee",
+      "msg": "Invalid Platform Fee"
+    },
+    {
+      "code": 6014,
+      "name": "UnAuthorizedAccessForPlatformStateUpdate",
+      "msg": "UnAuthorized Access For Platform State Update"
     }
   ],
   "types": [
+    {
+      "name": "Campaign",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "campaign_id",
+            "type": "u64"
+          },
+          {
+            "name": "campaign_ower",
+            "type": "pubkey"
+          },
+          {
+            "name": "campaign_title",
+            "type": "string"
+          },
+          {
+            "name": "campaign_description",
+            "type": "string"
+          },
+          {
+            "name": "campaign_image_url",
+            "type": "string"
+          },
+          {
+            "name": "campaign_goal_amount",
+            "type": "u64"
+          },
+          {
+            "name": "campaign_raised_amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "u64"
+          },
+          {
+            "name": "donors_count",
+            "type": "u64"
+          },
+          {
+            "name": "withdrawal_count",
+            "type": "u64"
+          },
+          {
+            "name": "balance",
+            "type": "u64"
+          },
+          {
+            "name": "is_active",
+            "type": "bool"
+          }
+        ]
+      }
+    },
     {
       "name": "ProgramState",
       "type": {
@@ -95,6 +647,34 @@
           {
             "name": "platform_address",
             "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Transaction",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "campaign_id",
+            "type": "u64"
+          },
+          {
+            "name": "transaction_owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "u64"
+          },
+          {
+            "name": "is_credit",
+            "type": "bool"
           }
         ]
       }

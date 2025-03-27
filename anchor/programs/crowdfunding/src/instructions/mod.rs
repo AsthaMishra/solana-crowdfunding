@@ -15,3 +15,6 @@ pub use donate::*;
 
 pub mod withdraw;
 pub use withdraw::*;
+
+pub mod update_platform_state;
+pub use update_platform_state::*;

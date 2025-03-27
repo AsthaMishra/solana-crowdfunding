@@ -1,2 +1,3 @@
 pub const ANCHOR_DISCRIMINATOR_SIZE: usize = 8;
 pub const MINIMUM_DONOATION_AMOUNT: u64 = 1_000_000_000;
+pub const MAX_PLATFORM_FEE: u64 = 15;

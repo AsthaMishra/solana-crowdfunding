@@ -28,4 +28,8 @@ pub enum CustomErrorCode {
     InsufficientBalance,
     #[msg("Invalid Platform Address")]
     InvalidPlatformAddress,
+    #[msg("Invalid Platform Fee")]
+    InvalidPlatformFee,
+    #[msg("UnAuthorized Access For Platform State Update")]
+    UnAuthorizedAccessForPlatformStateUpdate,
 }

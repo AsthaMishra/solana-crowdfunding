@@ -11,14 +11,14 @@ pub fn withdraw(ctx: Context<Withdraw>, campaign_id: u64, amount: u64) -> Result
     let transaction = &mut ctx.accounts.transaction;
     let program_state = &mut ctx.accounts.program_state;
 
-    let withdrawer = ctx.accounts.withrawer.key();
-    let platform_address = ctx.accounts.platform_address.key();
+    let withdrawer = &ctx.accounts.withrawer;
+    let platform_address = &ctx.accounts.platform_address;
 
     if campaign.campaign_id != campaign_id {
         return Err(CustomErrorCode::InvalidCampaignId.into());
     }
 
-    if campaign.campaign_ower != withdrawer {
+    if campaign.campaign_ower != withdrawer.key() {
         return Err(CustomErrorCode::UnAuthorizedWithdrawer.into());
     }
 
@@ -34,9 +34,34 @@ pub fn withdraw(ctx: Context<Withdraw>, campaign_id: u64, amount: u64) -> Result
         return Err(CustomErrorCode::InsufficientBalance.into());
     }
 
-    if platform_address != program_state.platform_address {
+    if platform_address.key() != program_state.platform_address.key() {
         return Err(CustomErrorCode::InvalidPlatformAddress.into());
     }
+
+    let rent = Rent::get()?.minimum_balance(campaign.to_account_info().data_len());
+
+    if amount > **campaign.to_account_info().lamports.borrow() - rent {
+        msg!("Insufficient balance to cover rent");
+        return Err(CustomErrorCode::InsufficientBalance.into());
+    }
+
+    let platform_fee = amount * program_state.platform_fee / 100;
+    let withdraw_amount = amount - platform_fee;
+
+    **campaign.to_account_info().try_borrow_mut_lamports()? -= withdraw_amount;
+    **withdrawer.to_account_info().try_borrow_mut_lamports()? += withdraw_amount;
+
+    **campaign.to_account_info().try_borrow_mut_lamports()? -= platform_fee;
+    **withdrawer.to_account_info().try_borrow_mut_lamports()? += platform_fee;
+
+    campaign.withdrawal_count += 1;
+    campaign.balance -= amount;
+
+    transaction.campaign_id = campaign_id;
+    transaction.transaction_owner = withdrawer.key();
+    transaction.amount = amount;
+    transaction.is_credit = false;
+    transaction.timestamp = Clock::get()?.unix_timestamp as u64;
 
     Ok(())
 }
@@ -70,6 +95,7 @@ pub struct Withdraw<'info> {
 
     // why do we have plaftorm address here , why can't we fetch it from program state
     // to make sure , commision is going to platform address specified in program state
+    /// CHECK: platform address should be fetched from program state
     #[account(mut)]
     pub platform_address: AccountInfo<'info>,
 

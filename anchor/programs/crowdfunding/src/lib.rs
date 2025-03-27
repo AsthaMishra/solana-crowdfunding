@@ -57,4 +57,15 @@ pub mod basic {
     pub fn donate(ctx: Context<Donate>, campaign_id: u64, amount: u64) -> Result<()> {
         instructions::donate(ctx, campaign_id, amount)
     }
+
+    pub fn withdraw(ctx: Context<Withdraw>, campaign_id: u64, amount: u64) -> Result<()> {
+        instructions::withdraw(ctx, campaign_id, amount)
+    }
+
+    pub fn update_platform_state(
+        ctx: Context<UpdatePlatformState>,
+        platform_fee: u64,
+    ) -> Result<()> {
+        instructions::update_platform_state(ctx, platform_fee)
+    }
 }
