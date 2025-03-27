@@ -32,4 +32,8 @@ pub enum CustomErrorCode {
     InvalidPlatformFee,
     #[msg("UnAuthorized Access For Platform State Update")]
     UnAuthorizedAccessForPlatformStateUpdate,
+    #[msg("Platform Fee Already Updated")]
+    PlatformFeeAlreadyUpdated,
+    #[msg("Program Not Initialized")]
+    ProgramNotInitialized,
 }

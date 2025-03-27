@@ -574,6 +574,16 @@ export type Basic = {
       "code": 6014,
       "name": "unAuthorizedAccessForPlatformStateUpdate",
       "msg": "UnAuthorized Access For Platform State Update"
+    },
+    {
+      "code": 6015,
+      "name": "platformFeeAlreadyUpdated",
+      "msg": "Platform Fee Already Updated"
+    },
+    {
+      "code": 6016,
+      "name": "programNotInitialized",
+      "msg": "Program Not Initialized"
     }
   ],
   "types": [

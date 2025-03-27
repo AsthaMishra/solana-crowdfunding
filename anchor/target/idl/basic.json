@@ -568,6 +568,16 @@
       "code": 6014,
       "name": "UnAuthorizedAccessForPlatformStateUpdate",
       "msg": "UnAuthorized Access For Platform State Update"
+    },
+    {
+      "code": 6015,
+      "name": "PlatformFeeAlreadyUpdated",
+      "msg": "Platform Fee Already Updated"
+    },
+    {
+      "code": 6016,
+      "name": "ProgramNotInitialized",
+      "msg": "Program Not Initialized"
     }
   ],
   "types": [
