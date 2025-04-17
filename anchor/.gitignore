@@ -10,3 +10,6 @@ target/.rustc_info.json
 node_modules
 test-ledger
 .yarn
+
+
+.env
