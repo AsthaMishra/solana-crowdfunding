@@ -26,9 +26,10 @@ pub fn withdraw(ctx: Context<Withdraw>, campaign_id: u64, amount: u64) -> Result
         return Err(CustomErrorCode::CampaignNotActive.into());
     }
 
-    if amount <= MINIMUM_DONOATION_AMOUNT {
-        return Err(CustomErrorCode::InvalidAmount.into());
-    }
+    // theer should not be any constraint for withdrawal amount
+    // if amount <= MINIMUM_DONOATION_AMOUNT {
+    //     return Err(CustomErrorCode::InvalidAmount.into());
+    // }
 
     if campaign.balance < amount {
         return Err(CustomErrorCode::InsufficientBalance.into());
@@ -42,7 +43,7 @@ pub fn withdraw(ctx: Context<Withdraw>, campaign_id: u64, amount: u64) -> Result
 
     if amount > **campaign.to_account_info().lamports.borrow() - rent {
         msg!("Insufficient balance to cover rent");
-        return Err(CustomErrorCode::InsufficientBalance.into());
+        return Err(CustomErrorCode::InsufficientBalanceToCoverRent.into());
     }
 
     let platform_fee = amount * program_state.platform_fee / 100;
@@ -51,6 +52,7 @@ pub fn withdraw(ctx: Context<Withdraw>, campaign_id: u64, amount: u64) -> Result
     **campaign.to_account_info().try_borrow_mut_lamports()? -= withdraw_amount;
     **withdrawer.to_account_info().try_borrow_mut_lamports()? += withdraw_amount;
 
+    //platform making money on every withrawal
     **campaign.to_account_info().try_borrow_mut_lamports()? -= platform_fee;
     **withdrawer.to_account_info().try_borrow_mut_lamports()? += platform_fee;
 

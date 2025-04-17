@@ -8,3 +8,5 @@ pub struct ProgramState {
     pub platform_fee: u64,
     pub platform_address: Pubkey,
 }
+
+// we can have one more field here, how much money is raised so far on this platform

@@ -584,6 +584,11 @@ export type Basic = {
       "code": 6016,
       "name": "programNotInitialized",
       "msg": "Program Not Initialized"
+    },
+    {
+      "code": 6017,
+      "name": "insufficientBalanceToCoverRent",
+      "msg": "Insufficient Balance To Cover Rent"
     }
   ],
   "types": [

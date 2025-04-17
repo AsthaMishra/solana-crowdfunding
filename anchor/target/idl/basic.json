@@ -578,6 +578,11 @@
       "code": 6016,
       "name": "ProgramNotInitialized",
       "msg": "Program Not Initialized"
+    },
+    {
+      "code": 6017,
+      "name": "InsufficientBalanceToCoverRent",
+      "msg": "Insufficient Balance To Cover Rent"
     }
   ],
   "types": [

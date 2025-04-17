@@ -36,4 +36,6 @@ pub enum CustomErrorCode {
     PlatformFeeAlreadyUpdated,
     #[msg("Program Not Initialized")]
     ProgramNotInitialized,
+    #[msg("Insufficient Balance To Cover Rent")]
+    InsufficientBalanceToCoverRent,
 }
