@@ -1,14 +1,30 @@
 'use client'
 
 import { useBasicProgram } from './basic-data-access'
+import { CreateCampaign } from './CreateCampaign'
+import { CampaignList } from './CampaignList'
+import { useState } from 'react'
 
 export function BasicCreate() {
   const { greet } = useBasicProgram()
 
   return (
-    <button className="btn btn-xs lg:btn-md btn-primary" onClick={() => greet.mutateAsync()} disabled={greet.isPending}>
-      Run program{greet.isPending && '...'}
-    </button>
+    <div className="space-y-4">
+      <button
+        className="btn btn-xs lg:btn-md btn-primary"
+        onClick={() => greet.mutateAsync()}
+        disabled={greet.isPending}
+      >
+        Run program{greet.isPending && '...'}
+      </button>
+
+      <div className="divider">OR</div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold">Create Campaign</h2>
+        <CreateCampaign />
+      </div>
+    </div>
   )
 }
 
@@ -26,8 +42,15 @@ export function BasicProgram() {
     )
   }
   return (
-    <div className={'space-y-6'}>
-      <pre>{JSON.stringify(getProgramAccount.data.value, null, 2)}</pre>
+    <div className="space-y-6">
+      <div className="bg-base-200 p-4 rounded-lg">
+        <h3 className="text-lg font-semibold mb-2">Program Account Data</h3>
+        <pre className="text-sm">{JSON.stringify(getProgramAccount.data.value, null, 2)}</pre>
+      </div>
+
+      <div className="divider">Campaigns</div>
+
+      <CampaignList />
     </div>
   )
 }
