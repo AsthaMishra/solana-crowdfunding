@@ -1,5 +1,5 @@
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useBasicProgram } from './basic-data-access';
+import { useBasicProgram } from './crowdfunding-data-access';
 import { CampaignCard } from './CampaignCard';
 
 export const CampaignList = () => {

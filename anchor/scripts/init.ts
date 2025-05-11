@@ -1,7 +1,7 @@
 import * as anchor from '@coral-xyz/anchor';
 import  fs from 'fs';
-import { Basic } from '../target/types/basic';
-import idl from '../target/idl/basic.json';
+import { Crowdfunding } from '../target/types/crowdfunding';
+import idl from '../target/idl/crowdfunding.json';
 import { PublicKey, SystemProgram } from '@solana/web3.js';
 
 
@@ -33,7 +33,7 @@ const main = async(cluster: string ) => {
     //  create anchor provider
     anchor.setProvider(provider);
 
-    const program = new anchor.Program<Basic>(idl as any, provider);
+    const program = new anchor.Program<Crowdfunding>(idl as any, provider);
     const [programStatePda] = PublicKey.findProgramAddressSync(
         [Buffer.from("program_state")],
         program.programId

@@ -9,7 +9,7 @@ declare_id!("8XFrTLrvNJCr3hG41vpxmK2BAHpTtPNVhKGHuxGu5NBb");
 use crate::instructions::*;
 
 #[program]
-pub mod basic {
+pub mod crowdfunding {
     use super::*;
 
     pub fn initialize(ctx: Context<InitializeProgramState>) -> Result<()> {

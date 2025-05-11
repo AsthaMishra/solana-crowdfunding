@@ -1,21 +1,20 @@
 'use client'
 
-import { useBasicProgram } from './basic-data-access'
+import { useCrowdfundingProgram } from './crowdfunding-data-access'
 import { CreateCampaign } from './CreateCampaign'
 import { CampaignList } from './CampaignList'
 import { useState } from 'react'
 
 export function BasicCreate() {
-  const { greet } = useBasicProgram()
 
   return (
     <div className="space-y-4">
       <button
         className="btn btn-xs lg:btn-md btn-primary"
-        onClick={() => greet.mutateAsync()}
-        disabled={greet.isPending}
+        // onClick={() => greet.mutateAsync()}
+        // disabled={greet.isPending}
       >
-        Run program{greet.isPending && '...'}
+        Run program{}
       </button>
 
       <div className="divider">OR</div>
@@ -29,7 +28,7 @@ export function BasicCreate() {
 }
 
 export function BasicProgram() {
-  const { getProgramAccount } = useBasicProgram()
+  const { getProgramAccount } = useCrowdfundingProgram()
 
   if (getProgramAccount.isLoading) {
     return <span className="loading loading-spinner loading-lg"></span>

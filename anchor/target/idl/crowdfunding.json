@@ -1,20 +1,14 @@
-/**
- * Program IDL in camelCase format in order to be used in JS/TS.
- *
- * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/basic.json`.
- */
-export type Basic = {
+{
   "address": "8XFrTLrvNJCr3hG41vpxmK2BAHpTtPNVhKGHuxGu5NBb",
   "metadata": {
-    "name": "basic",
+    "name": "crowdfunding",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
   "instructions": [
     {
-      "name": "createCampaign",
+      "name": "create_campaign",
       "discriminator": [
         111,
         131,
@@ -27,7 +21,7 @@ export type Basic = {
       ],
       "accounts": [
         {
-          "name": "campaignOwner",
+          "name": "campaign_owner",
           "writable": true,
           "signer": true
         },
@@ -52,40 +46,40 @@ export type Basic = {
               {
                 "kind": "account",
                 "path": "program_state.campaign_count",
-                "account": "programState"
+                "account": "ProgramState"
               }
             ]
           }
         },
         {
-          "name": "programState"
+          "name": "program_state"
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "campaignTitle",
+          "name": "campaign_title",
           "type": "string"
         },
         {
-          "name": "campaignDescription",
+          "name": "campaign_description",
           "type": "string"
         },
         {
-          "name": "campaignImageUrl",
+          "name": "campaign_image_url",
           "type": "string"
         },
         {
-          "name": "campaignGoalAmount",
+          "name": "campaign_goal_amount",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "deleteCampaign",
+      "name": "delete_campaign",
       "discriminator": [
         223,
         105,
@@ -98,7 +92,7 @@ export type Basic = {
       ],
       "accounts": [
         {
-          "name": "campaignOwer",
+          "name": "campaign_ower",
           "writable": true,
           "signer": true,
           "relations": [
@@ -125,19 +119,19 @@ export type Basic = {
               },
               {
                 "kind": "arg",
-                "path": "campaignId"
+                "path": "campaign_id"
               }
             ]
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "campaignId",
+          "name": "campaign_id",
           "type": "u64"
         }
       ]
@@ -156,7 +150,7 @@ export type Basic = {
       ],
       "accounts": [
         {
-          "name": "transactionOwner",
+          "name": "transaction_owner",
           "writable": true,
           "signer": true
         },
@@ -184,19 +178,19 @@ export type Basic = {
               },
               {
                 "kind": "arg",
-                "path": "campaignId"
+                "path": "campaign_id"
               }
             ]
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "campaignId",
+          "name": "campaign_id",
           "type": "u64"
         },
         {
@@ -224,7 +218,7 @@ export type Basic = {
           "signer": true
         },
         {
-          "name": "programState",
+          "name": "program_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -250,14 +244,14 @@ export type Basic = {
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
-      "name": "updateCampaign",
+      "name": "update_campaign",
       "discriminator": [
         235,
         31,
@@ -270,7 +264,7 @@ export type Basic = {
       ],
       "accounts": [
         {
-          "name": "campaignOwer",
+          "name": "campaign_ower",
           "writable": true,
           "signer": true,
           "relations": [
@@ -297,41 +291,41 @@ export type Basic = {
               },
               {
                 "kind": "arg",
-                "path": "campaignId"
+                "path": "campaign_id"
               }
             ]
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "campaignId",
+          "name": "campaign_id",
           "type": "u64"
         },
         {
-          "name": "campaignTitle",
+          "name": "campaign_title",
           "type": "string"
         },
         {
-          "name": "campaignDescription",
+          "name": "campaign_description",
           "type": "string"
         },
         {
-          "name": "campaignImageUrl",
+          "name": "campaign_image_url",
           "type": "string"
         },
         {
-          "name": "campaignGoalAmount",
+          "name": "campaign_goal_amount",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "updatePlatformState",
+      "name": "update_platform_state",
       "discriminator": [
         7,
         86,
@@ -349,7 +343,7 @@ export type Basic = {
           "signer": true
         },
         {
-          "name": "programState",
+          "name": "program_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -375,13 +369,13 @@ export type Basic = {
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "platformFee",
+          "name": "platform_fee",
           "type": "u64"
         }
       ]
@@ -424,7 +418,7 @@ export type Basic = {
               },
               {
                 "kind": "arg",
-                "path": "campaignId"
+                "path": "campaign_id"
               }
             ]
           }
@@ -434,21 +428,21 @@ export type Basic = {
           "writable": true
         },
         {
-          "name": "programState",
+          "name": "program_state",
           "writable": true
         },
         {
-          "name": "platformAddress",
+          "name": "platform_address",
           "writable": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "campaignId",
+          "name": "campaign_id",
           "type": "u64"
         },
         {
@@ -460,7 +454,7 @@ export type Basic = {
   ],
   "accounts": [
     {
-      "name": "campaign",
+      "name": "Campaign",
       "discriminator": [
         50,
         40,
@@ -473,7 +467,7 @@ export type Basic = {
       ]
     },
     {
-      "name": "programState",
+      "name": "ProgramState",
       "discriminator": [
         77,
         209,
@@ -486,7 +480,7 @@ export type Basic = {
       ]
     },
     {
-      "name": "transaction",
+      "name": "Transaction",
       "discriminator": [
         11,
         24,
@@ -502,127 +496,127 @@ export type Basic = {
   "errors": [
     {
       "code": 6000,
-      "name": "programAlreadyInitialized",
+      "name": "ProgramAlreadyInitialized",
       "msg": "Program Already Initialized"
     },
     {
       "code": 6001,
-      "name": "titleTooLongOrTooShort",
+      "name": "TitleTooLongOrTooShort",
       "msg": "Campaign Title either too long or too short"
     },
     {
       "code": 6002,
-      "name": "descriptionTooLongOrTooShort",
+      "name": "DescriptionTooLongOrTooShort",
       "msg": "Campaign Description either too long or too short"
     },
     {
       "code": 6003,
-      "name": "imageUrlTooLongOrTooShort",
+      "name": "ImageUrlTooLongOrTooShort",
       "msg": "Campaign Image URL either too long or too short"
     },
     {
       "code": 6004,
-      "name": "invalidGoalAmount",
+      "name": "InvalidGoalAmount",
       "msg": "Invalid Goal Amount"
     },
     {
       "code": 6005,
-      "name": "invalidCampaignId",
+      "name": "InvalidCampaignId",
       "msg": "Invalid Campaign Id"
     },
     {
       "code": 6006,
-      "name": "campaignAlreadyDeleted",
+      "name": "CampaignAlreadyDeleted",
       "msg": "Campaign Already Deleted"
     },
     {
       "code": 6007,
-      "name": "campaignNotActive",
+      "name": "CampaignNotActive",
       "msg": "Campaign Not Active"
     },
     {
       "code": 6008,
-      "name": "invalidAmount",
+      "name": "InvalidAmount",
       "msg": "Invalid Amount"
     },
     {
       "code": 6009,
-      "name": "goalAmountReached",
+      "name": "GoalAmountReached",
       "msg": "Goal Amount Reached"
     },
     {
       "code": 6010,
-      "name": "unAuthorizedWithdrawer",
+      "name": "UnAuthorizedWithdrawer",
       "msg": "UnAuthorized Withdrawer"
     },
     {
       "code": 6011,
-      "name": "insufficientBalance",
+      "name": "InsufficientBalance",
       "msg": "Insufficient Balance"
     },
     {
       "code": 6012,
-      "name": "invalidPlatformAddress",
+      "name": "InvalidPlatformAddress",
       "msg": "Invalid Platform Address"
     },
     {
       "code": 6013,
-      "name": "invalidPlatformFee",
+      "name": "InvalidPlatformFee",
       "msg": "Invalid Platform Fee"
     },
     {
       "code": 6014,
-      "name": "unAuthorizedAccessForPlatformStateUpdate",
+      "name": "UnAuthorizedAccessForPlatformStateUpdate",
       "msg": "UnAuthorized Access For Platform State Update"
     },
     {
       "code": 6015,
-      "name": "platformFeeAlreadyUpdated",
+      "name": "PlatformFeeAlreadyUpdated",
       "msg": "Platform Fee Already Updated"
     },
     {
       "code": 6016,
-      "name": "programNotInitialized",
+      "name": "ProgramNotInitialized",
       "msg": "Program Not Initialized"
     },
     {
       "code": 6017,
-      "name": "insufficientBalanceToCoverRent",
+      "name": "InsufficientBalanceToCoverRent",
       "msg": "Insufficient Balance To Cover Rent"
     }
   ],
   "types": [
     {
-      "name": "campaign",
+      "name": "Campaign",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "campaignId",
+            "name": "campaign_id",
             "type": "u64"
           },
           {
-            "name": "campaignOwer",
+            "name": "campaign_ower",
             "type": "pubkey"
           },
           {
-            "name": "campaignTitle",
+            "name": "campaign_title",
             "type": "string"
           },
           {
-            "name": "campaignDescription",
+            "name": "campaign_description",
             "type": "string"
           },
           {
-            "name": "campaignImageUrl",
+            "name": "campaign_image_url",
             "type": "string"
           },
           {
-            "name": "campaignGoalAmount",
+            "name": "campaign_goal_amount",
             "type": "u64"
           },
           {
-            "name": "campaignRaisedAmount",
+            "name": "campaign_raised_amount",
             "type": "u64"
           },
           {
@@ -630,11 +624,11 @@ export type Basic = {
             "type": "u64"
           },
           {
-            "name": "donorsCount",
+            "name": "donors_count",
             "type": "u64"
           },
           {
-            "name": "withdrawalCount",
+            "name": "withdrawal_count",
             "type": "u64"
           },
           {
@@ -642,14 +636,14 @@ export type Basic = {
             "type": "u64"
           },
           {
-            "name": "isActive",
+            "name": "is_active",
             "type": "bool"
           }
         ]
       }
     },
     {
-      "name": "programState",
+      "name": "ProgramState",
       "type": {
         "kind": "struct",
         "fields": [
@@ -658,31 +652,31 @@ export type Basic = {
             "type": "bool"
           },
           {
-            "name": "campaignCount",
+            "name": "campaign_count",
             "type": "u64"
           },
           {
-            "name": "platformFee",
+            "name": "platform_fee",
             "type": "u64"
           },
           {
-            "name": "platformAddress",
+            "name": "platform_address",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "transaction",
+      "name": "Transaction",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "campaignId",
+            "name": "campaign_id",
             "type": "u64"
           },
           {
-            "name": "transactionOwner",
+            "name": "transaction_owner",
             "type": "pubkey"
           },
           {
@@ -694,11 +688,11 @@ export type Basic = {
             "type": "u64"
           },
           {
-            "name": "isCredit",
+            "name": "is_credit",
             "type": "bool"
           }
         ]
       }
     }
   ]
-};
+}

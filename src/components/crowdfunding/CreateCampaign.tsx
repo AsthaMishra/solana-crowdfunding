@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useBasicProgram } from './basic-data-access';
+import { useBasicProgram } from './crowdfunding-data-access';
 
 interface CreateCampaignProps {
     onSuccess?: () => void;

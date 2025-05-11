@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useBasicProgram } from './basic-data-access';
+import { useCrowdfundingProgram } from './crowdfunding-data-access';
 import { DonateForm } from './DonateForm';
 import { CampaignManagement } from './CampaignManagement';
 

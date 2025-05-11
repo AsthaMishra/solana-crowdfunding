@@ -4,12 +4,12 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { ExplorerLink } from '../cluster/cluster-ui'
 import { WalletButton } from '../solana/solana-provider'
 import { AppHero, ellipsify } from '../ui/ui-layout'
-import { useBasicProgram } from './basic-data-access'
-import { BasicCreate, BasicProgram } from './basic-ui'
+import { useCrowdfundingProgram } from './crowdfunding-data-access'
+import { BasicCreate, BasicProgram } from './crowdfunding-ui'
 
 export default function BasicFeature() {
   const { publicKey } = useWallet()
-  const { programId } = useBasicProgram()
+  const { programId } = useCrowdfundingProgram()
 
   return publicKey ? (
     <div>

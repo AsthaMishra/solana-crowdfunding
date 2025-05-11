@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useBasicProgram } from './basic-data-access';
+import { useCrowdfundingProgram } from './crowdfunding-data-access';
 
 interface DonateFormProps {
     campaignId: number;
@@ -9,7 +9,7 @@ interface DonateFormProps {
 
 export const DonateForm = ({ campaignId, onSuccess }: DonateFormProps) => {
     const { publicKey } = useWallet();
-    const { donate } = useBasicProgram();
+    const { donate } = useCrowdfundingProgram();
     const [amount, setAmount] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
