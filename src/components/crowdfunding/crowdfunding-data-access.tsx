@@ -1,6 +1,6 @@
 'use client'
 
-import { getCrowdfundingProgram, getCrowdfundingProgramId } from '@project/anchor'
+import { getCrowdfundingProgramId, getCrowdfundingProgram } from '@project/anchor'
 import { useConnection } from '@solana/wallet-adapter-react'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { BN } from '@coral-xyz/anchor'
@@ -11,27 +11,25 @@ import { useTransactionToast } from '../ui/ui-layout'
 import { Cluster, Keypair, PublicKey } from '@solana/web3.js'
 import { useMemo } from 'react'
 
-interface CrowdfundingEntryArgs {   
-    campaign_title: string,
-    campaign_description: string,
-    campaign_image_url: string,
-    campaign_goal_amount: number,
-    campaign_id: number,
-} 
+interface CrowdfundingEntryArgs {
+  campaign_title: string,
+  campaign_description: string,
+  campaign_image_url: string,
+  campaign_goal_amount: number,
+  campaign_id: number,
+}
 
 export function useCrowdfundingProgram() {
   const { connection } = useConnection()
   const { cluster } = useCluster()
   const transactionToast = useTransactionToast()
   const provider = useAnchorProvider()
- const programId = useMemo(() => getCrowdfundingProgramId(cluster.network as Cluster), [cluster])
+  const programId = useMemo(() => getCrowdfundingProgramId(cluster.network as Cluster), [cluster])
   const program = useMemo(() => getCrowdfundingProgram(provider, programId), [provider, programId])
-
-  
 
   const accounts = useQuery({
     queryKey: ['crowdfunding', 'all', { cluster }],
-    queryFn: () => program.account.journalEntry.all(),
+    queryFn: () => program.account.campaign.all(),
   })
 
   const getProgramAccount = useQuery({
@@ -42,10 +40,10 @@ export function useCrowdfundingProgram() {
   // Campaign mutations
   const createCampaign = useMutation<string, Error, CrowdfundingEntryArgs>({
     mutationKey: ['crowdfunding', 'create-campaign', { cluster }],
-    mutationFn: ({ campaign_title, campaign_description, campaign_image_url, campaign_goal_amount } )=> {
-     return program.methods
-      .createCampaign(campaign_title, campaign_description, campaign_image_url, new BN(campaign_goal_amount * 1e9))
-      .rpc()
+    mutationFn: ({ campaign_title, campaign_description, campaign_image_url, campaign_goal_amount }) => {
+      return program.methods
+        .createCampaign(campaign_title, campaign_description, campaign_image_url, new BN(campaign_goal_amount * 1e9))
+        .rpc()
     },
     onSuccess: (signature) => {
       transactionToast(signature);
@@ -57,11 +55,12 @@ export function useCrowdfundingProgram() {
   const donate = useMutation<string, Error, CrowdfundingEntryArgs>({
     mutationKey: ['crowdfunding', 'donate', { cluster }],
     mutationFn: ({ campaign_id, campaign_goal_amount }) => {
-      return  program.methods
+      return program.methods
         .donate(campaign_id, new BN(campaign_goal_amount * 1e9))
-        .rpc()},
+        .rpc()
+    },
     onSuccess: (signature) => {
-      transactionToast(signature) ;
+      transactionToast(signature);
       return accounts.refetch();
     },
     onError: () => toast.error('Failed to donate'),
@@ -71,8 +70,9 @@ export function useCrowdfundingProgram() {
     mutationKey: ['crowdfunding', 'update-campaign', { cluster }],
     mutationFn: ({ campaign_id, campaign_title, campaign_description, campaign_image_url, campaign_goal_amount }) => {
       return program.methods
-      .updateCampaign(campaign_id, campaign_title, campaign_description, campaign_image_url, new BN(campaign_goal_amount * 1e9))
-      .rpc()},
+        .updateCampaign(campaign_id, campaign_title, campaign_description, campaign_image_url, new BN(campaign_goal_amount * 1e9))
+        .rpc()
+    },
     onSuccess: (signature) => {
       transactionToast(signature)
       toast.success('Campaign updated successfully')
@@ -82,10 +82,11 @@ export function useCrowdfundingProgram() {
 
   const deleteCampaign = useMutation<string, Error, CrowdfundingEntryArgs>({
     mutationKey: ['crowdfunding', 'delete-campaign', { cluster }],
-    mutationFn: ({campaign_id}) =>{
+    mutationFn: ({ campaign_id }) => {
       return program.methods
         .deleteCampaign(campaign_id)
-        .rpc()},
+        .rpc()
+    },
     onSuccess: (signature) => {
       transactionToast(signature)
       toast.success('Campaign deleted successfully')
