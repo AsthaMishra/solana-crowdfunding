@@ -56,7 +56,7 @@ export function useCrowdfundingProgram() {
     mutationKey: ['crowdfunding', 'donate', { cluster }],
     mutationFn: ({ campaign_id, campaign_goal_amount }) => {
       return program.methods
-        .donate(campaign_id, new BN(campaign_goal_amount * 1e9))
+        .donate(new BN(campaign_id), new BN(campaign_goal_amount * 1e9))
         .rpc()
     },
     onSuccess: (signature) => {
@@ -70,7 +70,7 @@ export function useCrowdfundingProgram() {
     mutationKey: ['crowdfunding', 'update-campaign', { cluster }],
     mutationFn: ({ campaign_id, campaign_title, campaign_description, campaign_image_url, campaign_goal_amount }) => {
       return program.methods
-        .updateCampaign(campaign_id, campaign_title, campaign_description, campaign_image_url, new BN(campaign_goal_amount * 1e9))
+        .updateCampaign(new BN(campaign_id), campaign_title, campaign_description, campaign_image_url, new BN(campaign_goal_amount * 1e9))
         .rpc()
     },
     onSuccess: (signature) => {
@@ -84,7 +84,7 @@ export function useCrowdfundingProgram() {
     mutationKey: ['crowdfunding', 'delete-campaign', { cluster }],
     mutationFn: ({ campaign_id }) => {
       return program.methods
-        .deleteCampaign(campaign_id)
+        .deleteCampaign(new BN(campaign_id))
         .rpc()
     },
     onSuccess: (signature) => {
