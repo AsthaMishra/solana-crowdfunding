@@ -1,10 +1,10 @@
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useBasicProgram } from './crowdfunding-data-access';
+import { useCrowdfundingProgram } from './crowdfunding-data-access';
 import { CampaignCard } from './CampaignCard';
 
 export const CampaignList = () => {
     const { publicKey } = useWallet();
-    const { getCampaigns } = useBasicProgram();
+    const { getCampaigns } = useCrowdfundingProgram();
 
     if (getCampaigns.isLoading) {
         return (

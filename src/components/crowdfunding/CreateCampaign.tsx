@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useBasicProgram } from './crowdfunding-data-access';
+import { useCrowdfundingProgram } from './crowdfunding-data-access';
 
 interface CreateCampaignProps {
     onSuccess?: () => void;
@@ -8,7 +8,7 @@ interface CreateCampaignProps {
 
 export const CreateCampaign = ({ onSuccess }: CreateCampaignProps) => {
     const { publicKey } = useWallet();
-    const { createCampaign } = useBasicProgram();
+    const { createCampaign } = useCrowdfundingProgram();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
