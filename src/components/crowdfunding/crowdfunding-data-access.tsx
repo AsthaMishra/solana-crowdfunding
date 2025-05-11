@@ -3,13 +3,15 @@
 import { getCrowdfundingProgramId, getCrowdfundingProgram } from '@project/anchor'
 import { useConnection } from '@solana/wallet-adapter-react'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { BN } from '@coral-xyz/anchor'
+import { AnchorError, BN } from '@coral-xyz/anchor'
 import toast from 'react-hot-toast'
 import { useCluster } from '../cluster/cluster-data-access'
 import { useAnchorProvider } from '../solana/solana-provider'
 import { useTransactionToast } from '../ui/ui-layout'
 import { Cluster, Keypair, PublicKey } from '@solana/web3.js'
 import { useMemo } from 'react'
+import * as anchor from "@coral-xyz/anchor";
+
 
 interface CrowdfundingEntryArgs {
   campaign_title: string,
@@ -40,9 +42,33 @@ export function useCrowdfundingProgram() {
   // Campaign mutations
   const createCampaign = useMutation<string, Error, CrowdfundingEntryArgs>({
     mutationKey: ['crowdfunding', 'create-campaign', { cluster }],
-    mutationFn: ({ campaign_title, campaign_description, campaign_image_url, campaign_goal_amount }) => {
-      return program.methods
-        .createCampaign(campaign_title, campaign_description, campaign_image_url, new BN(campaign_goal_amount * 1e9))
+    mutationFn: async ({ campaign_title, campaign_description, campaign_image_url, campaign_goal_amount }) => {
+
+      const [programStatePDA] = anchor.web3.PublicKey.findProgramAddressSync(
+        [Buffer.from("program_state")],
+        program.programId
+      );
+
+      const state = await program.account.programState.fetch(programStatePDA);
+      console.log("Program state:", state);
+
+      const campaignId = state.campaignCount as anchor.BN;
+      const [campaignPDA] = anchor.web3.PublicKey.findProgramAddressSync(
+        [Buffer.from("campaign"), campaignId.toArrayLike(Buffer, 'le', 8)],
+        program.programId
+      );
+
+      console.log("campaignId:", campaignId);
+      console.log("campaignPDA:", campaignPDA);
+
+
+      return await program.methods
+        .createCampaign(campaign_title, campaign_description, campaign_image_url, new BN(campaign_goal_amount * 10e9)).accountsPartial({
+          campaignOwner: provider.wallet.publicKey,
+          campaign: campaignPDA,
+          programState: programStatePDA,
+          systemProgram: anchor.web3.SystemProgram.programId,
+        })
         .rpc()
     },
     onSuccess: (signature) => {
@@ -50,6 +76,26 @@ export function useCrowdfundingProgram() {
       return accounts.refetch();
     },
     onError: () => toast.error('Failed to create campaign'),
+  })
+
+
+  return {
+    program,
+    programId,
+    getProgramAccount,
+    accounts,
+    createCampaign,
+  }
+}
+
+export function useCrowdfundingProgramAccount({ account }: { account: PublicKey }) {
+  const { cluster } = useCluster()
+  const transactionToast = useTransactionToast()
+  const { program, accounts } = useCrowdfundingProgram()
+
+  const accountQuery = useQuery({
+    queryKey: ['votingdapp', 'fetch', { cluster, account }],
+    queryFn: () => program.account.campaign.fetch(account),
   })
 
   const donate = useMutation<string, Error, CrowdfundingEntryArgs>({
@@ -103,12 +149,9 @@ export function useCrowdfundingProgram() {
     },
   })
 
+
   return {
-    program,
-    programId,
-    getProgramAccount,
-    // Campaign methods
-    createCampaign,
+    accountQuery,
     donate,
     updateCampaign,
     deleteCampaign,

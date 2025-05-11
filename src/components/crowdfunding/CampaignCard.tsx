@@ -4,7 +4,7 @@ import { useCrowdfundingProgram } from './crowdfunding-data-access';
 import { DonateForm } from './DonateForm';
 import { CampaignManagement } from './CampaignManagement';
 
-interface Campaign {
+export interface Campaign {
     id: number;
     title: string;
     description: string;
