@@ -7,6 +7,7 @@ pub fn initialize_program_state(ctx: Context<InitializeProgramState>) -> Result<
     let initialized_program = &mut ctx.accounts.program_state;
 
     if initialized_program.initialize{
+        msg!("Program Already Initialized");
         return Err(CustomErrorCode::ProgramAlreadyInitialized.into());
     }
 

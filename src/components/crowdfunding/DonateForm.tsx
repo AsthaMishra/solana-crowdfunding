@@ -1,32 +1,36 @@
 import { useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useCrowdfundingProgram } from './crowdfunding-data-access';
+import { useCrowdfundingProgram, useCrowdfundingProgramAccount } from './crowdfunding-data-access';
+import * as anchor from "@coral-xyz/anchor";
+
 
 interface DonateFormProps {
     campaignId: number;
     onSuccess?: () => void;
 }
 
-export const DonateForm = ({ campaignId, onSuccess }: DonateFormProps) => {
+export const DonateForm = ({ campaignId, onSuccess }: DonateFormProps, { account }: { account: anchor.web3.PublicKey }) => {
     const { publicKey } = useWallet();
-    const { donate } = useCrowdfundingProgram();
+    const { donate, accountQuery } = useCrowdfundingProgramAccount({ account });
     const [amount, setAmount] = useState('');
+    const [message, setMessage] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!publicKey) return;
 
-        try {
-            await donate.mutateAsync({
-                campaignId,
-                amount: parseFloat(amount),
-            });
-
-            setAmount('');
-            onSuccess?.();
-        } catch (error) {
-            console.error('Error donating:', error);
+        donate.mutateAsync({
+            campaign_id: campaignId, campaign_goal_amount: parseInt(amount),
+            campaign_title: '',
+            campaign_description: '',
+            campaign_image_url: ''
+        }, {
+            onSuccess: () => {
+                accountQuery.refetch();
+                setMessage(message);
+            },
         }
+        );
     };
 
     return (

@@ -20,18 +20,23 @@ pub fn create_campaign(
     // if(program_state.initialize)
 
     if campaign_title.len() > 64 || campaign_title.len() <= 0 {
+        msg!("Campaign Title: {}", campaign_title);
+
         return Err(CustomErrorCode::TitleTooLongOrTooShort.into());
     }
 
     if campaign_description.len() > 512 || campaign_description.len() <= 0 {
+        msg!("Campaign Description: {}", campaign_description);
         return Err(CustomErrorCode::DescriptionTooLongOrTooShort.into());
     }
 
     if campaign_image_url.len() > 256 || campaign_image_url.len() <= 0 {
+        msg!("Campaign Image URL: {}", campaign_image_url);
         return Err(CustomErrorCode::ImageUrlTooLongOrTooShort.into());
     }
 
     if campaign_goal_amount <= 0 {
+        msg!("Campaign Goal Amount: {}", campaign_goal_amount);
         return Err(CustomErrorCode::InvalidGoalAmount.into());
     }
 

@@ -28,7 +28,7 @@ export const CampaignManagement = ({ campaign, onSuccess }: CampaignManagementPr
         title: campaign.title,
         description: campaign.description,
         imageUrl: campaign.imageUrl,
-        goalAmount: campaign.goalAmount.toString(),
+        goalAmount: campaign.goalAmount,
     });
 
     const handleUpdate = async (e: React.FormEvent) => {

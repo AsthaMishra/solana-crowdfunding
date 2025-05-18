@@ -8,37 +8,40 @@ interface CreateCampaignProps {
 
 export const CreateCampaign = ({ onSuccess }: CreateCampaignProps) => {
     const { publicKey } = useWallet();
-    const { createCampaign } = useCrowdfundingProgram();
+    const { createCampaign, accounts } = useCrowdfundingProgram();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         imageUrl: '',
         goalAmount: '',
     });
+    const [message, setMessage] = useState("");
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!publicKey) return;
 
-        try {
-            await createCampaign.mutateAsync({
-                title: formData.title,
-                description: formData.description,
-                imageUrl: formData.imageUrl,
-                goalAmount: parseFloat(formData.goalAmount),
-            });
-
-            setFormData({
-                title: '',
-                description: '',
-                imageUrl: '',
-                goalAmount: '',
-            });
-
-            onSuccess?.();
-        } catch (error) {
-            console.error('Error creating campaign:', error);
+        createCampaign.mutateAsync({
+            campaign_title: formData.title,
+            campaign_description: formData.description,
+            campaign_image_url: formData.imageUrl,
+            campaign_goal_amount: parseFloat(formData.goalAmount),
+            campaign_id: 0, // This should be set to the next available ID
+        }, {
+            onSuccess: () => {
+                accounts.refetch();
+                setMessage(message);
+            },
         }
+        );
+
+        setFormData({
+            title: '',
+            description: '',
+            imageUrl: '',
+            goalAmount: '',
+        });
     };
 
     return (

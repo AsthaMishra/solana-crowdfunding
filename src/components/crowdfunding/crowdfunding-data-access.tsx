@@ -94,7 +94,7 @@ export function useCrowdfundingProgramAccount({ account }: { account: PublicKey 
   const { program, accounts } = useCrowdfundingProgram()
 
   const accountQuery = useQuery({
-    queryKey: ['votingdapp', 'fetch', { cluster, account }],
+    queryKey: ['crowdfunding', 'fetch', { cluster, account }],
     queryFn: () => program.account.campaign.fetch(account),
   })
 
